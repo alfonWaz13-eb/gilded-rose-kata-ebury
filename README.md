@@ -43,7 +43,6 @@ method and Items property static if you like, we'll cover for you).
 Just for clarification, an item can never have its Quality increase 
 above 50, however "Sulfuras" is a legendary item and as such its 
 Quality is 80 and it never alters.
-
 ---
 
 ## GETTING STARTED
@@ -77,6 +76,13 @@ The recommended natural procedure is as follows:
 4.  **Atomic Commits:** To facilitate team collaboration and review, make atomic changes. Each commit to the repository should represent a small, coherent change that can be easily reviewed and discussed by other team members. After a commit, collaborators should pull the latest changes to ensure they are working with the most up-to-date version.
 5.  **Active Collaboration:** It is crucial for all team members to participate in the discussion of proposed changes, offering ideas and suggestions to improve the code's design. Collaboration and knowledge sharing are key to the success of this exercise.
 6.  **Share Results:** The final idea is to share all results at the end of the exercise so we can see how the other teams have solved the same problem.
+
+**Note on Test Clarity and Business Logic:**
+
+It is highly important that our tests clearly articulate **what** piece of business logic is being tested. Test names should reflect the rule they are enforcing, not just the function being called.
+
+* **Good Example:** A test named `test_quality_of_item_is_never_more_than_50` is correct because it verifies a specific business rule (the maximum quality constraint across all items).
+* **Poor Example:** A test named `test_item_quality` is unclear as it doesn't provide any information about the business logic being verified.
 ---
 
 ### TEST COVERAGE
