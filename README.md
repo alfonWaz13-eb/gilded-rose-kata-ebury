@@ -43,6 +43,7 @@ method and Items property static if you like, we'll cover for you).
 Just for clarification, an item can never have its Quality increase 
 above 50, however "Sulfuras" is a legendary item and as such its 
 Quality is 80 and it never alters.
+
 ---
 
 ## GETTING STARTED
@@ -62,6 +63,7 @@ pip install -r requirements.txt
 ```
 python -m unittest
 ```
+
 ---
 
 ### HOW TO PROCEED
@@ -83,6 +85,7 @@ It is highly important that our tests clearly articulate **what** piece of busin
 
 * **Good Example:** A test named `test_quality_of_item_is_never_more_than_50` is correct because it verifies a specific business rule (the maximum quality constraint across all items).
 * **Poor Example:** A test named `test_item_quality` is unclear as it doesn't provide any information about the business logic being verified.
+
 ---
 
 ### TEST COVERAGE
@@ -99,5 +102,6 @@ make test-coverage
 <img src="images/project_tree.png" alt="Estructura del Proyecto" width="500"/>
 
 <img src="images/main_file_coverage.png" alt="Reporte de Cobertura del Archivo Principal" width="600"/>
+
 ---
 
