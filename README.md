@@ -61,7 +61,7 @@ pip install -r requirements.txt
 ```
 5. Make sure the tests run
 ```
-python -m unittest
+python -m pytest
 ```
 
 ---
