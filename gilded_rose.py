@@ -28,34 +28,10 @@ class GildedRose(object):
                 item.quality = sulfuras.quality
                 item.sell_in = sulfuras.sell_in
             else:
-                if item.name != AGED_BRIE and item.name != BACKSTAGE_PASS:
-                    if item.quality > 0:
-                        if item.name != SULFURAS:
-                            item.quality = item.quality - 1
-                else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
-                        if item.name == BACKSTAGE_PASS:
-                            if item.sell_in < 11:
-                                if item.quality < 50:
-                                    item.quality = item.quality + 1
-                            if item.sell_in < 6:
-                                if item.quality < 50:
-                                    item.quality = item.quality + 1
-                if item.name != SULFURAS:
-                    item.sell_in = item.sell_in - 1
-                if item.sell_in < 0:
-                    if item.name != AGED_BRIE:
-                        if item.name != BACKSTAGE_PASS:
-                            if item.quality > 0:
-                                if item.name != SULFURAS:
-                                    item.quality = item.quality - 1
-                        else:
-                            item.quality = item.quality - item.quality
-                    else:
-                        if item.quality < 50:
-                            item.quality = item.quality + 1
-
+                normal_item = NormalItem(sell_in=item.sell_in, quality=item.quality)
+                normal_item.update_state()
+                item.quality = normal_item.quality
+                item.sell_in = normal_item.sell_in
 
 class Item:
     def __init__(self, name, sell_in, quality):
@@ -132,3 +108,24 @@ class Sulfuras:
 
     def _update_sell_in(self):
         pass
+
+
+@dataclass
+class NormalItem:
+    sell_in: int
+    quality: int
+
+    def update_state(self):
+        self._update_quality()
+        self._update_sell_in()
+
+    def _update_quality(self):
+        self.quality -= 1
+        if self.sell_in <= 0:
+            self.quality -= 1
+
+        if self.quality < 0:
+            self.quality = 0
+
+    def _update_sell_in(self):
+        self.sell_in -= 1
