@@ -1,6 +1,5 @@
 from available_items import SULFURAS, BACKSTAGE_PASS, AGED_BRIE, AgedBrie, BackstagePass, Sulfuras, NormalItem
 
-
 class GildedRose(object):
 
     AVAILABLE_ITEMS = {
@@ -15,7 +14,7 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            gilded_rose_product = self.AVAILABLE_ITEMS[item](sell_in=item.sell_in, quality=item.quality)
+            gilded_rose_product= self.AVAILABLE_ITEMS[item](sell_in=item.sell_in, quality=item.quality)
             gilded_rose_product.update_state()
             item.quality = gilded_rose_product.quality
             item.sell_in = gilded_rose_product.sell_in

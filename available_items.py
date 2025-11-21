@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
 
 SULFURAS = "Sulfuras, Hand of Ragnaros"
 BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
@@ -6,14 +6,24 @@ AGED_BRIE = "Aged Brie"
 NORMAL_ITEM = "foo"
 
 
-@dataclass
-class AgedBrie:
-    sell_in: int
-    quality: int
+class GildedRoseProduct(ABC):
+
+    def __init__(self, sell_in, quality):
+        self.sell_in = sell_in
+        self.quality = quality
 
     def update_state(self):
         self._update_quality()
         self._update_sell_in()
+
+    @abstractmethod
+    def _update_quality(self): ...
+
+    @abstractmethod
+    def _update_sell_in(self): ...
+
+
+class AgedBrie(GildedRoseProduct):
 
     def _update_quality(self):
         self.quality += 1
@@ -27,14 +37,7 @@ class AgedBrie:
         self.sell_in -= 1
 
 
-@dataclass
-class BackstagePass:
-    sell_in: int
-    quality: int
-
-    def update_state(self):
-        self._update_quality()
-        self._update_sell_in()
+class BackstagePass(GildedRoseProduct):
 
     def _update_quality(self):
 
@@ -57,14 +60,7 @@ class BackstagePass:
         self.sell_in -= 1
 
 
-@dataclass
-class Sulfuras:
-    sell_in: int
-    quality: int
-
-    def update_state(self):
-        self._update_quality()
-        self._update_sell_in()
+class Sulfuras(GildedRoseProduct):
 
     def _update_quality(self):
         pass
@@ -73,14 +69,7 @@ class Sulfuras:
         pass
 
 
-@dataclass
-class NormalItem:
-    sell_in: int
-    quality: int
-
-    def update_state(self):
-        self._update_quality()
-        self._update_sell_in()
+class NormalItem(GildedRoseProduct):
 
     def _update_quality(self):
         self.quality -= 1
