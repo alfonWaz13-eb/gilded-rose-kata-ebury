@@ -15,6 +15,18 @@ class GildedRose(object):
                 aged_brie.update_state()
                 item.quality = aged_brie.quality
                 item.sell_in = aged_brie.sell_in
+
+            elif item.name == BACKSTAGE_PASS:
+                backstage_pass = BackstagePass(sell_in=item.sell_in, quality=item.quality)
+                backstage_pass.update_state()
+                item.quality = backstage_pass.quality
+                item.sell_in = backstage_pass.sell_in
+
+            elif item.name == SULFURAS:
+                sulfuras = Sulfuras(sell_in=item.sell_in, quality=item.quality)
+                sulfuras.update_state()
+                item.quality = sulfuras.quality
+                item.sell_in = sulfuras.sell_in
             else:
                 if item.name != AGED_BRIE and item.name != BACKSTAGE_PASS:
                     if item.quality > 0:
@@ -74,3 +86,49 @@ class AgedBrie:
 
     def _update_sell_in(self):
         self.sell_in -= 1
+
+
+@dataclass
+class BackstagePass:
+    sell_in: int
+    quality: int
+
+    def update_state(self):
+        self._update_quality()
+        self._update_sell_in()
+
+    def _update_quality(self):
+
+        if self.sell_in <= 0:
+            self.quality = 0
+
+        elif self.sell_in <= 5:
+            self.quality += 3
+
+        elif self.sell_in <= 10:
+            self.quality += 2
+
+        else:
+            self.quality += 1
+
+        if self.quality > 50:
+            self.quality = 50
+
+    def _update_sell_in(self):
+        self.sell_in -= 1
+
+
+@dataclass
+class Sulfuras:
+    sell_in: int
+    quality: int
+
+    def update_state(self):
+        self._update_quality()
+        self._update_sell_in()
+
+    def _update_quality(self):
+        pass
+
+    def _update_sell_in(self):
+        pass
