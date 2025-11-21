@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from available_items import SULFURAS, BACKSTAGE_PASS, AGED_BRIE
 
 
@@ -8,33 +10,39 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            if item.name != AGED_BRIE and item.name != BACKSTAGE_PASS:
-                if item.quality > 0:
-                    if item.name != SULFURAS:
-                        item.quality = item.quality - 1
+            if item.name == AGED_BRIE:
+                aged_brie = AgedBrie(sell_in=item.sell_in, quality=item.quality)
+                aged_brie.update_state()
+                item.quality = aged_brie.quality
+                item.sell_in = aged_brie.sell_in
             else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == BACKSTAGE_PASS:
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-            if item.name != SULFURAS:
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != AGED_BRIE:
-                    if item.name != BACKSTAGE_PASS:
-                        if item.quality > 0:
-                            if item.name != SULFURAS:
-                                item.quality = item.quality - 1
-                    else:
-                        item.quality = item.quality - item.quality
+                if item.name != AGED_BRIE and item.name != BACKSTAGE_PASS:
+                    if item.quality > 0:
+                        if item.name != SULFURAS:
+                            item.quality = item.quality - 1
                 else:
                     if item.quality < 50:
                         item.quality = item.quality + 1
+                        if item.name == BACKSTAGE_PASS:
+                            if item.sell_in < 11:
+                                if item.quality < 50:
+                                    item.quality = item.quality + 1
+                            if item.sell_in < 6:
+                                if item.quality < 50:
+                                    item.quality = item.quality + 1
+                if item.name != SULFURAS:
+                    item.sell_in = item.sell_in - 1
+                if item.sell_in < 0:
+                    if item.name != AGED_BRIE:
+                        if item.name != BACKSTAGE_PASS:
+                            if item.quality > 0:
+                                if item.name != SULFURAS:
+                                    item.quality = item.quality - 1
+                        else:
+                            item.quality = item.quality - item.quality
+                    else:
+                        if item.quality < 50:
+                            item.quality = item.quality + 1
 
 
 class Item:
@@ -45,3 +53,24 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+@dataclass
+class AgedBrie:
+    sell_in: int
+    quality: int
+
+    def update_state(self):
+        self._update_quality()
+        self._update_sell_in()
+
+    def _update_quality(self):
+        self.quality += 1
+        if self.sell_in <= 0:
+            self.quality += 1
+
+        if self.quality > 50:
+            self.quality = 50
+
+    def _update_sell_in(self):
+        self.sell_in -= 1
