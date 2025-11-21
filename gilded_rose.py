@@ -3,33 +3,22 @@ from available_items import SULFURAS, BACKSTAGE_PASS, AGED_BRIE, AgedBrie, Backs
 
 class GildedRose(object):
 
+    AVAILABLE_ITEMS = {
+        AGED_BRIE: AgedBrie,
+        BACKSTAGE_PASS: BackstagePass,
+        SULFURAS: Sulfuras,
+        NormalItem: NormalItem
+    }
+
     def __init__(self, items):
         self.items = items
 
     def update_quality(self):
         for item in self.items:
-            if item.name == AGED_BRIE:
-                aged_brie = AgedBrie(sell_in=item.sell_in, quality=item.quality)
-                aged_brie.update_state()
-                item.quality = aged_brie.quality
-                item.sell_in = aged_brie.sell_in
-
-            elif item.name == BACKSTAGE_PASS:
-                backstage_pass = BackstagePass(sell_in=item.sell_in, quality=item.quality)
-                backstage_pass.update_state()
-                item.quality = backstage_pass.quality
-                item.sell_in = backstage_pass.sell_in
-
-            elif item.name == SULFURAS:
-                sulfuras = Sulfuras(sell_in=item.sell_in, quality=item.quality)
-                sulfuras.update_state()
-                item.quality = sulfuras.quality
-                item.sell_in = sulfuras.sell_in
-            else:
-                normal_item = NormalItem(sell_in=item.sell_in, quality=item.quality)
-                normal_item.update_state()
-                item.quality = normal_item.quality
-                item.sell_in = normal_item.sell_in
+            gilded_rose_product = self.AVAILABLE_ITEMS[item](sell_in=item.sell_in, quality=item.quality)
+            gilded_rose_product.update_state()
+            item.quality = gilded_rose_product.quality
+            item.sell_in = gilded_rose_product.sell_in
 
 class Item:
     def __init__(self, name, sell_in, quality):
