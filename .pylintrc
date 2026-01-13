@@ -1,0 +1,38 @@
+[MESSAGES CONTROL]
+
+disable=
+    too-many-return-statements,
+    broad-except,
+    consider-using-f-string,
+    disallowed-name,
+    fixme,
+    function-redefined,
+    invalid-name,
+    line-too-long,
+    logging-fstring-interpolation,
+    missing-class-docstring,
+    missing-function-docstring,
+    missing-module-docstring,
+    no-member,
+    no-name-in-module,
+    not-callable,
+    notimplemented-raised,
+    redefined-outer-name,
+    singleton-comparison,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-locals,
+    unspecified-encoding,
+    unsupported-assignment-operation,
+    unused-argument,
+    unused-import,
+    unused-variable,
+    too-many-instance-attributes,
+    too-many-branches,
+    too-many-statements,
+    duplicate-code,
+    use-yield-from,
+    too-many-positional-arguments
+
+[MASTER]
+load-plugins=pylint_plugins.pytest_mark_checker
