@@ -38,6 +38,8 @@ Every day, our system automatically updates these numbers!
 - **Conjured Items (TO BE IMPLEMENTED)**:  
   - Spoil faster: **Quality drops twice as fast as normal items**.
 
+**Run the `gilded_rose_example.py` file to see the behavior of the system.**
+
 ### Your Mission
 
 - **Add support for "Conjured" items**: They go bad twice as fast as regular items.
