@@ -1,7 +1,7 @@
 from gilded_rose import GildedRose, Item
 
-
-def test_foo():
+# general rules tests
+def test_quality_sellin_ok():
     item = Item("foo", 1, 1)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
@@ -9,6 +9,31 @@ def test_foo():
     assert item.sell_in == 0
     assert item.quality == 0
 
+def test_quality_sellin_expired():
+    item = Item("foo", 0, 2)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "foo"
+    assert item.sell_in == -1
+    assert item.quality == 0
+
+def test_quality_min():
+    item = Item("foo", 1, 0)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "foo"
+    assert item.sell_in == 0
+    assert item.quality == 0
+
+def test_quality_max():
+    item = Item("Aged Brie", 1, 50)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Aged Brie"
+    assert item.sell_in == 0
+    assert item.quality == 50
+
+# special items tests
 def test_aged_brie():
     item = Item("Aged Brie", 10, 0)
     gilded_rose = GildedRose([item])
