@@ -90,3 +90,7 @@ def test_backstage_quality_zero():
     assert item.name == "Backstage passes to a TAFKAL80ETC concert"
     assert item.sell_in == -1
     assert item.quality == 0
+
+def test_print_item():
+    item = Item("foo", 5, 10)
+    assert repr(item) == "foo, 5, 10"
