@@ -23,6 +23,7 @@ Every day, our system automatically updates these numbers!
 
 - **Aged Brie**:  
   - Gets better with age: **Quality increases** each day (up to 50).
+  - if sellin <0 in aged brie, quality increases in two.
 
 - **Sulfuras, Hand of Ragnaros**:  
   - Legendary, never sold!  
