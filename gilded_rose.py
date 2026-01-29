@@ -17,6 +17,11 @@ class GildedRose(object):
                 updater.update_quality(item)
                 return
 
+            if item.name == "Backstage passes to a TAFKAL80ETC concert":
+                updater = BackstagePassesUpdater()
+                updater.update_quality(item)
+                return
+
             updater = Updater()
             updater.update_quality(item)
             
@@ -48,3 +53,17 @@ class AgedBrieUpdater(Updater):
 class SulfurasUpdater(Updater):
     def update_quality(self, item):
         return
+    
+class BackstagePassesUpdater(Updater):
+    def update_quality(self, item):
+        if item.sell_in > 10:
+                item.quality = item.quality + 1
+        elif item.sell_in > 5:
+                item.quality = item.quality + 2
+        elif item.sell_in > 0:
+                item.quality = item.quality + 3
+        else:
+            item.quality = 0
+        if item.quality > 50:
+            item.quality = 50
+        item.sell_in = item.sell_in - 1
