@@ -21,6 +21,11 @@ class GildedRose(object):
                 updater = BackstagePassesUpdater()
                 updater.update_quality(item)
                 return
+            
+            if item.name == "Conjured Item":
+                updater = ConjuredItemUpdater()
+                updater.update_quality(item)
+                return
 
             updater = Updater()
             updater.update_quality(item)
@@ -71,3 +76,12 @@ class BackstagePassesUpdater(Updater):
         if item.quality > 50:
             item.quality = 50
         item.sell_in = item.sell_in - 1
+
+class ConjuredItemUpdater(Updater):
+    def update_quality(self, item):
+        item.sell_in = item.sell_in - 1
+        item.quality = item.quality - 2
+        if item.sell_in < 0:
+            item.quality = item.quality - 2
+        if item.quality < 0:
+            item.quality = 0

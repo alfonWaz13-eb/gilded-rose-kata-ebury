@@ -91,6 +91,22 @@ def test_backstage_quality_zero():
     assert item.sell_in == -1
     assert item.quality == 0
 
+def test_conjured_item_quality_drop():
+    item = Item("Conjured Item", 1, 2)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Conjured Item"
+    assert item.sell_in == 0
+    assert item.quality == 0
+
+def test_conjured_item_quality_drop_expired():
+    item = Item("Conjured Item", -1, 4)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Conjured Item"
+    assert item.sell_in == -2
+    assert item.quality == 0
+
 def test_print_item():
     item = Item("foo", 5, 10)
     assert repr(item) == "foo, 5, 10"
