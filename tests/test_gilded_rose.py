@@ -42,6 +42,15 @@ def test_aged_brie_quality_increase():
     assert item.sell_in == 9
     assert item.quality == 1
 
+def test_aged_brie_never_expires():
+    item = Item("Aged Brie", -1, 0)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Aged Brie"
+    assert item.sell_in == -2
+    # it increases the quality twice when expired
+    assert item.quality == 2
+
 def test_sulfuras_never_changes():
     item = Item("Sulfuras, Hand of Ragnaros", 1, 80)
     gilded_rose = GildedRose([item])
@@ -51,33 +60,33 @@ def test_sulfuras_never_changes():
     assert item.quality == 80
 
 def test_backstage_quality_increase():
-    item = Item("Backstage passes to a TAFKAL80ETC concert", 1, 80)
+    item = Item("Backstage passes to a TAFKAL80ETC concert", 11, 0)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
     assert item.name == "Backstage passes to a TAFKAL80ETC concert"
-    assert item.sell_in == 0
-    assert item.quality == 80
+    assert item.sell_in == 10
+    assert item.quality == 1
 
 def test_backstage_quality_increase_10_days():
-    item = Item("Sulfuras, Hand of Ragnaros", 1, 80)
+    item = Item("Backstage passes to a TAFKAL80ETC concert", 10, 0)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
-    assert item.name == "Sulfuras, Hand of Ragnaros"
-    assert item.sell_in == 1
-    assert item.quality == 80
+    assert item.name == "Backstage passes to a TAFKAL80ETC concert"
+    assert item.sell_in == 9
+    assert item.quality == 2
 
 def test_backstage_quality_increase_5_days():
-    item = Item("Sulfuras, Hand of Ragnaros", 1, 80)
+    item = Item("Backstage passes to a TAFKAL80ETC concert", 5, 0)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
-    assert item.name == "Sulfuras, Hand of Ragnaros"
-    assert item.sell_in == 1
-    assert item.quality == 80
+    assert item.name == "Backstage passes to a TAFKAL80ETC concert"
+    assert item.sell_in == 4
+    assert item.quality == 3
 
 def test_backstage_quality_zero():
-    item = Item("Sulfuras, Hand of Ragnaros", 1, 80)
+    item = Item("Backstage passes to a TAFKAL80ETC concert", 0, 10)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
-    assert item.name == "Sulfuras, Hand of Ragnaros"
-    assert item.sell_in == 1
-    assert item.quality == 80
+    assert item.name == "Backstage passes to a TAFKAL80ETC concert"
+    assert item.sell_in == -1
+    assert item.quality == 0
