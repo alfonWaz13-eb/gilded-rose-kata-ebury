@@ -2,7 +2,20 @@
 SULFURAS = "Sulfuras, Hand of Ragnaros"
 CONCERT_TICKETS = "Backstage passes to a TAFKAL80ETC concert"
 AGED_BRIE = "Aged Brie"
+AGED_BRIE_QUALITY_INCREASE_NEGATIVE_SELLIN = 2
+DEFAULT_QUALITY_UNIT = 1
+DOUBLE_QUALITY_UNIT = 2
 
+
+TOP_QUALITY = 50
+MIN_QUALITY = 0
+
+CLOSE_DATE_QUALITY_INCREASE = 2
+CLOSE_DATE_DAYS_LIMIT = 10
+VERY_CLOSE_DATE_QUALITY_INCREASE = 3
+VERY_CLOSE_DATE_DAYS_LIMIT = 5
+
+DEFAULT_SELL_IN_UNIT = 1
 
 class GildedRose(object):
 
@@ -15,31 +28,31 @@ class GildedRose(object):
                 item.quality = 80
             elif item.name == AGED_BRIE:
                 if item.sell_in < 0:
-                    item.quality += 2
-                elif item.quality < 50:
-                    item.quality +=1
-                item.sell_in -=1
+                    item.quality += AGED_BRIE_QUALITY_INCREASE_NEGATIVE_SELLIN
+                elif item.quality < TOP_QUALITY:
+                    item.quality += DEFAULT_QUALITY_UNIT
+                item.sell_in -= DEFAULT_SELL_IN_UNIT
             elif item.name == CONCERT_TICKETS:
                 if item.sell_in < 0:
-                    item.quality = 0
-                elif item.sell_in <= 5:
-                    item.quality += 3
-                elif item.sell_in <= 10:
-                    item.quality += 2
+                    item.quality = MIN_QUALITY
+                elif item.sell_in <= VERY_CLOSE_DATE_DAYS_LIMIT:
+                    item.quality += VERY_CLOSE_DATE_QUALITY_INCREASE
+                elif item.sell_in <= CLOSE_DATE_DAYS_LIMIT:
+                    item.quality += CLOSE_DATE_QUALITY_INCREASE
                 else:
-                    item.quality += 1
-                item.sell_in -=1
+                    item.quality += DEFAULT_QUALITY_UNIT
+                item.sell_in -= DEFAULT_SELL_IN_UNIT
             else:
                 if item.sell_in < 0:
-                    item.quality -= 2
-                    item.sell_in -= 1
+                    item.quality -= DOUBLE_QUALITY_UNIT
+                    item.sell_in -= DEFAULT_SELL_IN_UNIT
                 else:
-                    item.sell_in -= 1
-                    item.quality -= 1
-                if item.quality < 0:
-                    item.quality =0
-                elif item.quality > 50:
-                    item.quality =50
+                    item.sell_in -= DEFAULT_SELL_IN_UNIT
+                    item.quality -= DEFAULT_QUALITY_UNIT
+                if item.quality < MIN_QUALITY:
+                    item.quality = MIN_QUALITY
+                elif item.quality > TOP_QUALITY:
+                    item.quality = TOP_QUALITY
 
 class Item:
     def __init__(self, name, sell_in, quality):
