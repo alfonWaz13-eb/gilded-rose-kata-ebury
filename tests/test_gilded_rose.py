@@ -83,6 +83,15 @@ def test_backstage_quality_increase_5_days():
     assert item.sell_in == 4
     assert item.quality == 3
 
+def test_backstage_quality_max():
+    item = Item("Backstage passes to a TAFKAL80ETC concert", 5, 50)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Backstage passes to a TAFKAL80ETC concert"
+    assert item.sell_in == 4
+    assert item.quality == 50
+
+
 def test_backstage_quality_zero():
     item = Item("Backstage passes to a TAFKAL80ETC concert", 0, 10)
     gilded_rose = GildedRose([item])
@@ -101,6 +110,14 @@ def test_conjured_item_quality_drop():
 
 def test_conjured_item_quality_drop_expired():
     item = Item("Conjured Item", -1, 4)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.name == "Conjured Item"
+    assert item.sell_in == -2
+    assert item.quality == 0
+
+def test_conjured_item_quality_drop_zero():
+    item = Item("Conjured Item", -1, 2)
     gilded_rose = GildedRose([item])
     gilded_rose.update_quality()
     assert item.name == "Conjured Item"
