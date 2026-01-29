@@ -43,3 +43,23 @@ def test_backstage_5_sell_in_increase_quality_3():
     assert item.sell_in == 4
     assert item.quality == 43
 
+def test_aged_brie_never_goes_above_50():
+    item = Item("Aged Brie", 5, 50)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.sell_in == 4
+    assert item.quality == 50
+
+def test_aged_brie_increase_quality():
+    item = Item("Aged Brie", 5, 40)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.sell_in == 4
+    assert item.quality == 41
+
+def test_aged_brie_double_increase_quality_bellow_sell_in_zerp():
+    item = Item("Aged Brie", -1, 30)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.sell_in == -2
+    assert item.quality == 32
