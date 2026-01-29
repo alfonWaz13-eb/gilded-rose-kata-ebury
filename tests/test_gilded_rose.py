@@ -54,7 +54,7 @@ def test_item_Aged_Brie():
     gilded_rose.update_quality()
     assert item.name == "Aged Brie"
     assert item.sell_in == -2
-    assert item.quality == 4
+    assert item.quality == 5
 
 def test_item_sulfuras():
     item = Item(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80)
@@ -63,3 +63,19 @@ def test_item_sulfuras():
     assert item.name == "Sulfuras, Hand of Ragnaros"
     assert item.sell_in == -1
     assert item.quality == 80
+
+def test_item_conjured():
+    item = Item(name="Conjured Items", sell_in=5, quality=10)
+    gilded_rose = GildedRose(items=[item])
+    gilded_rose.update_quality()
+    assert item.name == "Conjured Items"
+    assert item.sell_in == 4
+    assert item.quality == 8
+
+def test_item_conjured_negative_sell_in():
+    item = Item(name="Conjured Items", sell_in=0, quality=10)
+    gilded_rose = GildedRose(items=[item])
+    gilded_rose.update_quality()
+    assert item.name == "Conjured Items"
+    assert item.sell_in == -1
+    assert item.quality == 6
