@@ -1,2 +1,5 @@
+--index-url https://pypi.ebury.rocks/simple/
+
 pytest
 coverage
+ipdb
