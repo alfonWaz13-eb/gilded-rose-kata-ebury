@@ -22,6 +22,22 @@ def test_sulfuras_quality_always_80():
     assert item.sell_in == 0
     assert item.quality == 80
 
+def test_general_decrements_two_over_sell_in_below_zero():
+    item = Item("foo", -1, 30)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.sell_in == -2
+    assert item.quality == 28
+
+def test_quality_goes_to_zero_after_concert():
+    item = Item("Backstage passes to a TAFKAL80ETC concert", -1, 30)
+    gilded_rose = GildedRose([item])
+    gilded_rose.update_quality()
+    assert item.sell_in == -2
+    assert item.quality == 0
+
+
+
 def test_backstage_15_sell_in_increase_quality_1():
     item = Item("Backstage passes to a TAFKAL80ETC concert", 15, 40)
     gilded_rose = GildedRose([item])
