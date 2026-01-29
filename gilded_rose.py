@@ -41,6 +41,10 @@ class Updater:
     def update_quality(self, item):
         item.sell_in = item.sell_in - 1
         item.quality = item.quality - 1
+        if item.sell_in < 0:
+            item.quality = item.quality - 1
+        if item.quality < 0:
+            item.quality = 0
 
 class AgedBrieUpdater(Updater):
     def update_quality(self, item):
